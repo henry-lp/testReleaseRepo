@@ -67,7 +67,7 @@ public class RepairnatorPostBuild extends Recorder {
         return this.gitBranch;
     }
 
-    public void printAllEnvVars(AbstractBuild build,BuildListener listener) {
+    /*public void printAllEnvVars(AbstractBuild build,BuildListener listener) {
         try {
             EnvVars env = build.getEnvironment(listener);
             for (String key : env.keySet()) {
@@ -76,12 +76,17 @@ public class RepairnatorPostBuild extends Recorder {
         }catch (Exception e ) {
             e.printStackTrace(System.out);
         }
-    }
+    }*/
 
 
-    public boolean errorCheckB4Exec(String branch) {
-        if (branch == "") {
+    public boolean errorCheckB4Exec(String branch,String url) {
+        if (branch.equals("")) {
             System.out.println("ERROR: THE PROVIDED GITBRANCH IS EMPTY");
+            return false;
+        }
+
+        if (url.equals("")) {
+            System.out.println("ERROR: THE PROVIDED GITURL IS EMPTY");
             return false;
         }
         /* Tool check */
@@ -109,7 +114,6 @@ public class RepairnatorPostBuild extends Recorder {
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
         System.setOut(listener.getLogger());
         System.setErr(listener.getLogger());
-        this.printAllEnvVars(build,listener);
         try {
             EnvVars env = build.getEnvironment(listener);
             String author = env.get("ghprbActualCommitAuthor") == null ? "" : env.get("ghprbActualCommitAuthor");
@@ -117,7 +121,7 @@ public class RepairnatorPostBuild extends Recorder {
                 System.out.println("The committer is repairnator, no repair will be made");
                 return true;
             }
-            String branch;
+            String branch = "master";
             if (this.gitBranch.equals("")) {
                 String branchEnv = env.get("GIT_BRANCH");
                 branch = branchEnv == null || branchEnv.equals("") ? "master" : env.get("GIT_BRANCH");
@@ -128,7 +132,7 @@ public class RepairnatorPostBuild extends Recorder {
                 branch = this.gitBranch;
             }
 
-            String url;
+            String url = "";
             if (this.gitUrl.equals("")) {
                 String gitUrlEnv = env.get("GIT_URL");
                 /* Usual github */
@@ -137,28 +141,20 @@ public class RepairnatorPostBuild extends Recorder {
                 /* Git builder */
                 } else if (!(env.get("ghprbAuthorRepoGitUrl") == null && env.get("ghprbAuthorRepoGitUrl").equals(""))) {
                     url = env.get("ghprbAuthorRepoGitUrl");
-                } else {
-                    System.out.println("No Git url found , no repair will be made");
-                    return true;
                 }
             } else {
                 url = this.gitUrl;
             }
-            this.errorCheckB4Exec(branch);
+            this.errorCheckB4Exec(branch,url);
             System.out.println("The following tools will be used : " + Arrays.toString(this.getTools()));
-            RunPipelineAction action =  new RunPipelineAction(url,this.gitOAuthToken,branch,this.getTools());
-            action.run();
+            RunPipelineAction action =  new RunPipelineAction(url,this.gitOAuthToken,branch);
+            action.run(this.getTools());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return true;
     }
 
-    public boolean testRun() {
-        RunPipelineAction action =  new RunPipelineAction(this.gitUrl,this.gitOAuthToken,this.gitBranch,this.getTools());
-        action.run();
-        return true;
-    }
     // Overridden for better type safety.
     // If your plugin doesn't really define any property on Descriptor,
     // you don't have to do this.

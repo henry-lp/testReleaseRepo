@@ -26,7 +26,6 @@ public class RunPipelineAction {
     private String gitUrl;
     private String gitToken;
     private String gitBranch;
-    private String[] tools;
 
     /* Might need to pinpoint the exact logger in the future, but it should be fine for now*/
     private void pipeAllLoggerToStderr() {
@@ -43,21 +42,20 @@ public class RunPipelineAction {
         }
     }
 
-    public void run() {
+    public void run(String[] tools) {
+        this.pipeAllLoggerToStderr();
         try {
             JenkinsLauncher launcher = new JenkinsLauncher();
             RepairToolsManager.getInstance().manualLoadRepairTools();
-            this.pipeAllLoggerToStderr();
-            launcher.jenkinsMain(this.gitUrl,this.gitToken,this.gitBranch,this.tools);
+            launcher.jenkinsMain(this.gitUrl,this.gitToken,this.gitBranch,tools);
         } catch(Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public RunPipelineAction(String gitUrl,String gitToken,String gitBranch,String[] tools) {
+    public RunPipelineAction(String gitUrl,String gitToken,String gitBranch) {
         this.gitUrl = gitUrl;
         this.gitToken = gitToken;
         this.gitBranch = gitBranch;
-        this.tools = tools; 
     }
 } 
