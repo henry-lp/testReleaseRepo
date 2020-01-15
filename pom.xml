@@ -41,7 +41,7 @@
         <repository>
           <id>tdurieux.github.io/maven-repository</id>
           <name>tdurieux.github.io maven-repository</name>
-          <url>https://tdurieux.github.io/maven-repository/releases/</url>
+          <url>https://github.com/henry-lp/maven-releases.git</url>
         </repository>
     </distributionManagement>
 
