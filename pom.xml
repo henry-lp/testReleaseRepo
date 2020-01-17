@@ -39,9 +39,8 @@
 
     <distributionManagement>
         <repository>
-          <id>henry-lp/testReleaseRepo</id>
-          <name>henry-lp maven-repository</name>
-          <url>https://github.com/henry-lp/testReleaseRepo</url>
+          <id>sonatype-nexus-staging</id>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
