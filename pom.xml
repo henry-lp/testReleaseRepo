@@ -9,7 +9,7 @@
     </parent>
     <groupId>fr.inria.jenkins-plugin</groupId>
     <artifactId>repairnator</artifactId>
-    <version>1.4-SNAPSHOT</version>
+    <version>1.4</version>
     <packaging>hpi</packaging>
     <properties>
         <!-- Baseline Jenkins version you use to build the plugin. Users must have this version or newer to run. -->
@@ -34,7 +34,7 @@
         <url>https://github.com/henry-lp/testReleaseRepo</url>
         <connection>scm:git:git://github.com:henry-lp/testReleaseRepo.git</connection>
         <developerConnection>scm:git:git@github.com:henry-lp/maven-releases.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>repairnator-1.4</tag>
     </scm>
 
     <distributionManagement>
