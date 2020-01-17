@@ -33,15 +33,15 @@
     <scm>
         <url>https://github.com/henry-lp/testReleaseRepo</url>
         <connection>scm:git:git://github.com:henry-lp/testReleaseRepo.git</connection>
-        <developerConnection>scm:git:git@github.com:henry-lp/testReleaseRepo.git</developerConnection>
+        <developerConnection>scm:git:git@github.com:henry-lp/maven-releases.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
         <repository>
-          <id>tdurieux.github.io/maven-repository</id>
-          <name>tdurieux.github.io maven-repository</name>
-          <url>https://github.com/henry-lp/maven-releases.git</url>
+          <id>henry-lp/testReleaseRepo</id>
+          <name>henry-lp maven-repository</name>
+          <url>https://github.com/henry-lp/testReleaseRepo</url>
         </repository>
     </distributionManagement>
 
