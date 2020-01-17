@@ -7,7 +7,7 @@
         <version>3.50</version>
         <relativePath />
     </parent>
-    <groupId>fr.inria.jenkins-plugin</groupId>
+    <groupId>hering123.jenkins-plugin</groupId>
     <artifactId>repairnator</artifactId>
     <version>1.5-SNAPSHOT</version>
     <packaging>hpi</packaging>
@@ -42,6 +42,10 @@
           <id>sonatype-nexus-staging</id>
           <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
+        <snapshotRepository>
+            <id>ossrh-repairnator-snapshot</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <dependencyManagement>
